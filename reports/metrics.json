@@ -1,0 +1,16 @@
+{
+  "logistic_regression": {
+    "roc_auc": 0.841,
+    "accuracy": 0.74,
+    "precision": 0.506,
+    "recall": 0.786,
+    "f1": 0.616
+  },
+  "gradient_boosting": {
+    "roc_auc": 0.844,
+    "accuracy": 0.805,
+    "precision": 0.669,
+    "recall": 0.524,
+    "f1": 0.588
+  }
+}
