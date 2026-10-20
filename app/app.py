@@ -3,10 +3,9 @@ import sys
 from pathlib import Path
 
 import joblib
-import matplotlib.pyplot as plt
 import pandas as pd
-import shap
 import streamlit as st
+from matplotlib.figure import Figure
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -61,8 +60,14 @@ with tab_predict:
     exp = explain(explainer, X)
     contrib = pd.Series(exp.values[0], index=X.columns).sort_values()
     st.subheader("Why this prediction?")
-    shap.plots.waterfall(exp[0], max_display=10, show=False)
-    st.pyplot(plt.gcf(), clear_figure=True)
+    top = contrib.reindex(contrib.abs().sort_values(ascending=False).head(10).index).sort_values()
+    fig = Figure(figsize=(7, 4))  # standalone figure: no shared pyplot state
+    ax = fig.subplots()
+    ax.barh(top.index, top.values, color=["#ff0051" if v > 0 else "#008bfb" for v in top])
+    ax.axvline(0, color="grey", lw=0.8)
+    ax.set_xlabel("Impact on churn risk (SHAP value, log-odds)  |  red = raises, blue = lowers")
+    fig.tight_layout()
+    st.pyplot(fig)
     st.caption("Raises the risk: " + ", ".join(contrib.tail(3).index[::-1]) +
                "  |  Lowers the risk: " + ", ".join(contrib.head(3).index))
 
