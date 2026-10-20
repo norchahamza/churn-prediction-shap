@@ -24,7 +24,7 @@ Top drivers (SHAP): month-to-month contract, short tenure, no online security, f
 ## Run it
 
 ```bash
-git clone https://github.com/<your-user>/churn-prediction-shap.git
+git clone https://github.com/norchahamza/churn-prediction-shap.git
 cd churn-prediction-shap
 python -m venv .venv && source .venv/bin/activate   # Windows Git Bash: source .venv/Scripts/activate
 pip install -r requirements.txt
